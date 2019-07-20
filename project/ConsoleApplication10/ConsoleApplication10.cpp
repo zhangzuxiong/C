@@ -1,5 +1,5 @@
 ﻿// ConsoleApplication10.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//---单链表
+//---单链表--头结点
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -17,7 +17,7 @@ typedef struct Node
 typedef struct Single_Linked_List
 {
 	//方式1：头指针
-	Node* node;
+	//Node* node;
 
 	//方式2：头结点
 	Node head;
