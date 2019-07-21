@@ -42,6 +42,9 @@ int is_empoty(const List list);
 //插入学生
 int insert_stu(List* p);
 
+//修改学生信息
+int update_stu(List* p, const int ID);
+
 //删除学生
 int delete_stu(List* p, const int ID);
 
@@ -63,39 +66,74 @@ int main()
 {
 	List students = { 0 };
 	init(&students);
-	//printf("%d \n", is_empoty(students));
+	//加载已经存在的学生，读取文件数据
+	read_file(&students);
 
-	insert_stu(&students);
-	printf("\n---------------------\n");
-	display_stu(students);
-	insert_stu(&students);
-	printf("\n---------------------\n");
-	display_stu(students);
-	insert_stu(&students);
-	printf("\n---------------------\n");
-	display_stu(students);
-	insert_stu(&students);
-	printf("\n---------------------\n");
-	display_stu(students);
+	int flag = 1;
 
-	insert_stu(&students);
-	printf("\n---------------------\n");
-	display_stu(students);
+	while (flag)
+	{
+		printf("\n=================欢迎进入学生信息管理系统============\n");
+		printf("\t\t 0.退出系统\n");
+		printf("\t\t 1.录入学生信息\n");
+		printf("\t\t 2.查询学生信息\n");
+		printf("\t\t 3.删除学生信息\n");
+		printf("\t\t 4.修改学生信息\n");
+		printf("\t\t 5.显示所有学生信息\n");
+		printf("请选择:");
+		
+		scanf(" %d", &flag);
+		printf("\n");
+		
+		int id = 0;
+		int count = 0;
 
-	insert_stu(&students);
-	printf("\n---------------------\n");
-	display_stu(students);
-	printf("\n---------------------\n");
+		switch (flag)
+		{
+		case 1:
 
-	search_stu(students, 2);
-	search_stu(students, 10);
+			printf("请输入录入学生的个数:");
+			scanf(" %d", &count);
+			while (count>0)
+			{
+				insert_stu(&students);
+				count-- ;
+			}
+
+			break;
 
 
-	delete_stu(&students, 2);
-	display_stu(students);
-	printf("\n---------------------\n");
+		case 2:
+			printf("请输入需要查询的学生的学号:");
+			scanf(" %d", &id);
+			search_stu(students, id);
+			break;
 
-	write_file(students);
+		case 3:
+			printf("请输入需要删除学生的学号:");
+			scanf(" %d", &id);
+			delete_stu(&students, id);
+			break;
+			
+		case 4:
+			printf("请输入需要修改学生的学号:");
+			scanf(" %d", &id);
+			update_stu(&students, id);
+			break;
+			
+		case 5:
+			display_stu(students);
+			break;
+
+		case 0:
+			write_file(students);
+			break;
+
+		default:
+			printf("输入有误\n");
+			break;
+		}
+	}
 
     return 0;
 }
@@ -114,7 +152,7 @@ int write_file(const List list) {
 	}
 
 	// 写在文件最上方第一行的内容就是一共有多少个学生的信息 
-	fprintf(fp, "%d\n", list.count);
+	//fprintf(fp, "%d\n", list.count);
 
 	// 循环遍历内存中的数据结构（单链表）
 	for (p = list.head; p != NULL; p = p->next)
@@ -134,7 +172,8 @@ int write_file(const List list) {
 int read_file(List* p) {
 
 	FILE* fp;//文件指针 
-	Student* p1, * p2;
+	Student* p1;
+	Student* p2;
 
 	// 打开文件，读取的方式
 	fp = fopen("student.txt", "r");
@@ -145,7 +184,7 @@ int read_file(List* p) {
 	}
 
 	// 从文件的第一行，获取学生信息的个数
-	fscanf(fp, "%d\n", &(p->count));
+	//fscanf(fp, "%d\n", &(p->count));
 
 	// 新建的结构体空间，之后会用来保存从文件中读取的一个学生信息的结构体内容
 	p->head = p1 = p2 = (Student*)malloc(sizeof(Student));
@@ -153,6 +192,12 @@ int read_file(List* p) {
 	// 链表新建第一个结点的操作，单独处理
 	fscanf(fp, "%d\t%s\t%d\t%s\n",
 		&p1->ID, p1->name, &p1->age, p1->email);
+	if (p1->ID<0)
+	{
+		//文件为空
+		return 0;
+	}
+	p->count++;
 
 	// 循环遍历文件，按学生信息类型的结构体取出对应的数据内容，赋值给新的结构体变量（在堆上新创建的结点）
 	while (!feof(fp))
@@ -169,6 +214,8 @@ int read_file(List* p) {
 
 		// 获取新链表末尾
 		p2 = p1;
+
+		p->count++;
 	}
 
 	// 将最后一个结点的 向后指针 置为空
@@ -253,8 +300,7 @@ int insert_stu(List* p) {
 			return 1;
 		}
 	}
-	printf("pre->ID:%d  student->ID:%d\n", pre->ID, student->ID);
-
+	
 	//如果在末尾插入
 	if (index==NULL)
 	{
@@ -263,6 +309,15 @@ int insert_stu(List* p) {
 		return 1;
 		p->count++;
 	}
+
+
+	if (index->ID==student->ID)
+	{
+		printf("您输入的学生学号已经存在\n");
+		return 0;
+	}
+
+
 
 	pre->next = student;
 	student->next = index;
@@ -302,6 +357,46 @@ int search_stu(const List list, const int ID) {
 
 }
 
+//修改学生信息
+int update_stu(List* p, const int ID) {
+
+	if (p == NULL)
+	{
+		return -1;
+	}
+	if (is_empoty(*p))
+	{
+		return -2;
+	}
+
+	//记录修改的学生
+	Student* index = p->head;
+
+
+	while (index != NULL && index->ID != ID)
+	{
+		index = index->next;
+	}
+
+
+	if (index == NULL)
+	{
+		printf("您想要修改的学生不存在\n");
+		return -3;
+	}
+
+
+	printf("请输入学生新的年龄:");
+	scanf(" %d", &(index->age));
+	printf("请输入学生新的姓名:");
+	scanf(" %s", &(index->name));
+	printf("请输入学生新的邮箱:");
+	scanf(" %s", &(index->email));
+
+	printf("修改成功\n");
+	return 1;
+}
+
 //删除学生,返回值：-1表示传入参数为空，-2表示学生信息为空,
 //				  -3表示没有找到学生，1表示删除成功正常返回
 int delete_stu(List* p, const int ID) {
@@ -319,7 +414,7 @@ int delete_stu(List* p, const int ID) {
 	Student* index = p->head;
 
 	//记录删除学生的前一个学生
-	Student* pre = NULL;
+	Student* pre = index;
 
 	while (index!=NULL&&index->ID<ID)
 	{
@@ -330,14 +425,21 @@ int delete_stu(List* p, const int ID) {
 
 	if (index==NULL)
 	{
-		printf("没有找到您输入的ID对应的学生\n");
+		printf("您想要删除的学生不存在\n");
 		return -3;
 	}
 
-
-	pre->next = index->next;
+	//如果删除的位置在第一个
+	if (pre==index)
+	{
+		p->head = index->next;
+	}
+	if (pre!=index)
+	{
+		pre->next = index->next;
+	}
 	p->count--;
-
+	printf("删除成功\n");
 	return 1;
 }
 
