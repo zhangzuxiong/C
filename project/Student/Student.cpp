@@ -1,5 +1,5 @@
 ﻿// Student.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//链表实现动态内存管理
+//链表实现动态内存管理，学生信息保存到文件，每次启动时读取文件
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
