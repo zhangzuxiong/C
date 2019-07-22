@@ -36,16 +36,17 @@ void init(Queue* p) {
 		return;
 	}
 
+	//临时指针变量，释放空间
+	Node* temp = p->head;
+
 	while (p->head != NULL)
 	{
-		//临时指针变量，释放空间
-		Node* temp = p->head->next;
 		//p->head.next = p->head.next->next;
-		p->head->next = temp->next;
+		p->head = temp->next;
 		free(temp);
 
 		//将temp指向下一个释放的节点
-		temp = p->head->next;
+		temp = p->head;
 	}
 	p->count = 0;
 
