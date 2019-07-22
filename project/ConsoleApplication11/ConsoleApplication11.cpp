@@ -159,21 +159,20 @@ void clear(Stack* p) {
 	}
 
 	//清空
+	//头结点指向的下一个节点为空，则栈为空
+	Node* temp = p->head;
 
 	while (p->head!=NULL)
 	{
 
-		//头结点指向的下一个节点为空，则栈为空
-		Node* temp = p->head;
-
 		//向后移动一个
-		p->head->next = temp->next;
+		p->head = temp->next;
 
 		//释放空间
 		free(temp);
 
 		//指向下一个释放的节点
-		temp = temp->next;
+		temp = p->head;
 	}
 	p->count = 0;
 }
@@ -202,9 +201,11 @@ int main()
 {
 	Stack stack = { 0 };
 	init(&stack);
-
+	push(&stack, 10);
 	clear(&stack);
 	display(stack);
+
+	return 0;
 
 	is_empoty(stack);
 	push(&stack, 10);
