@@ -9,6 +9,9 @@
 	链表实现栈时，数据从头指针开始存放，
 				或者从头结点的下一个节点开始存放
 
+	一定要最大容量？
+	命名规则
+
 */
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -45,20 +48,22 @@ void init(Stack* p) {
 		return;
 	}
 
+	//临时指针变量，释放空间
+	Node* temp = p->head;
+
 	while (p->head != NULL)
 	{
-		//临时指针变量，释放空间
-		Node* temp = p->head->next;
-		//p->head.next = p->head.next->next;
-		p->head->next = temp->next;
+		//p->head = temp->next;
+		p->head = p->head->next;
 		free(temp);
 
 		//将temp指向下一个释放的节点
-		temp = p->head->next;
+		temp = p->head;
 	}
 	p->count = 0;
 
 	//头结点指针置位NULL
+	//前面的循环已经将head置为NULL
 	//p->head->next = NULL;
 
 	//头结点里面存放的数值置位0
