@@ -31,7 +31,7 @@ typedef struct Stack
 	Node* head;
 
 	//最大容量
-	//int max;
+	int max;
 
 	//有效元素个数
 	int count;
@@ -48,8 +48,12 @@ void init(Stack* p) {
 		return;
 	}
 
+	printf("请输入栈的容量");
+	scanf(" %d", &(p->max));
+
 	//临时指针变量，释放空间
 	Node* temp = p->head;
+
 
 	while (p->head != NULL)
 	{
@@ -86,12 +90,33 @@ int is_empoty(const Stack stack) {
 }
 
 
+//判满
+int is_full(const Stack stack) {
+	if (stack.count == stack.max)
+	{
+		printf("栈为满\n");
+		return 1;
+	}
+	else
+	{
+		printf("栈不为满\n");
+		return 0;
+	}
+}
+
+
 //入栈,将新创建的节点放到链表的第一个节点，
 //这样在出栈的时候只需要拿出第一个节点即可
 void push(Stack* p, const int num) {
 	if (p==NULL)
 	{
 		printf("入栈传入的参数为空\n");
+		return;
+	}
+
+	if (is_full(*p))
+	{
+		printf("栈已满，无法入栈\n");
 		return;
 	}
 
@@ -206,11 +231,7 @@ int main()
 {
 	Stack stack = { 0 };
 	init(&stack);
-	push(&stack, 10);
-	clear(&stack);
-	display(stack);
 
-	return 0;
 
 	is_empoty(stack);
 	push(&stack, 10);
