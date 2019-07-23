@@ -1,5 +1,5 @@
 ﻿// ConsoleApplication11.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//链表实现队列--头指针存放了一个数据
+//链表实现循环队列--头指针存放了一个数据
 
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -19,7 +19,7 @@ typedef struct Queue
 	Node* head;
 
 	//最大容量
-	//int max;
+	int max;
 
 	//有效元素个数
 	int count;
@@ -35,6 +35,9 @@ void init(Queue* p) {
 		printf("初始化参数为空\n");
 		return;
 	}
+
+	printf("请输入队列的容量");
+	scanf(" %d", &(p->max));
 
 	//临时指针变量，释放空间
 	Node* temp = p->head;
@@ -73,12 +76,32 @@ int is_empoty(const Queue queue) {
 }
 
 
+//判满
+int is_full(const Queue queue) {
+	if (queue.count == queue.max)
+	{
+		printf("队列为满\n");
+		return 1;
+	}
+	else
+	{
+		printf("队列不为满\n");
+		return 0;
+	}
+}
+
+
 //入队,将新创建的节点放到链表的最后一个节点，
 //这样在出队的时候只需要拿出第一个节点即可
 void put_Queue(Queue* p, const int num) {
 	if (p == NULL)
 	{
 		printf("入栈传入的参数为空\n");
+		return;
+	}
+	if (is_full(*p))
+	{
+		printf("队列已满\n");
 		return;
 	}
 	//临时变量保存链表的头
@@ -199,18 +222,16 @@ int main()
 {
 	Queue queue = { 0 };
 	init(&queue);
-	//display(queue);
-	put_Queue(&queue, 10);
-	printf("\n");
-	clear(&queue);
-	display(queue);
-	return 0;
 
 	is_empoty(queue);
 	put_Queue(&queue, 10);
 	put_Queue(&queue, 11);
 	put_Queue(&queue, 12);
+	display(queue);
+	printf("出队节点元素:%d\n",get_Queue(&queue));
+	printf("出队节点元素:%d\n",get_Queue(&queue));
 	put_Queue(&queue, 13);
+	display(queue);
 	put_Queue(&queue, 14);
 	display(queue);
 
