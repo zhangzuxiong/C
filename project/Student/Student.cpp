@@ -272,7 +272,7 @@ int insert_stu(List* p) {
 		pre = index;
 		index = index->next;
 	}
-	//新加入的学生ID比头结点ID小，或者链表里面已经存在一个数据
+	//新加入的节点在头节点，或者链表里面已经存在一个数据
 	if (pre == index)
 	{
 		//学生ID小于头指针元素ID
@@ -300,7 +300,7 @@ int insert_stu(List* p) {
 			return 1;
 		}
 	}
-	
+	// 1	2	4	5	7
 	//如果在末尾插入
 	if (index==NULL)
 	{
@@ -310,7 +310,7 @@ int insert_stu(List* p) {
 		p->count++;
 	}
 
-
+	printf("pre->ID:%d index->ID:%d    student->ID:%d\n", pre->ID, index->ID, student->ID);
 	if (index->ID==student->ID)
 	{
 		printf("您输入的学生学号已经存在\n");
@@ -416,7 +416,7 @@ int delete_stu(List* p, const int ID) {
 	//记录删除学生的前一个学生
 	Student* pre = index;
 
-	while (index!=NULL&&index->ID<ID)
+	while (index!=NULL&&index->ID!=ID)
 	{
 		pre = index;
 		index = index->next;
@@ -433,10 +433,16 @@ int delete_stu(List* p, const int ID) {
 	if (pre==index)
 	{
 		p->head = index->next;
+
+		free(index);
+		//index = NULL;
 	}
 	if (pre!=index)
 	{
 		pre->next = index->next;
+
+		free(index);
+		//index = NULL;
 	}
 	p->count--;
 	printf("删除成功\n");
@@ -489,16 +495,15 @@ int init(List* p) {
 		return -1;
 	}
 
+	//临时指针变量，释放空间
+	Student* temp = p->head;
 	while (p->head != NULL)
 	{
-		//临时指针变量，释放空间
-		Student* temp = p->head->next;
-		//p->head.next = p->head.next->next;
-		p->head->next = temp->next;
+		p->head = temp->next;
 		free(temp);
 
 		//将temp指向下一个释放的节点
-		temp = p->head->next;
+		temp = p->head;
 	}
 	p->count = 0;
 	return 1;
