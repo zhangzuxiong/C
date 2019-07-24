@@ -1,5 +1,5 @@
 ﻿// ConsoleApplication20.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//双向链表实现队列 头尾节点
+//双向链表实现循环队列 头尾节点
 
 #include "CQueue_By_Double_Linked_List.h"
 
