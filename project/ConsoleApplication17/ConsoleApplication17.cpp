@@ -16,6 +16,8 @@ int main()
 		pushStack(&stack, (i + 1) * 10);
 	}
 
+	printf("出栈的值为:%d\n", popStack(&stack));
+
 	printStack(stack);
 
 	clearStack(&stack);
