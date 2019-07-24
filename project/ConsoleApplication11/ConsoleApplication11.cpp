@@ -73,7 +73,7 @@ void init(Stack* p) {
 	//头结点里面存放的数值置位0
 	//p->head->data = 0;
 }
-
+ 
 
 //判空
 int is_empoty(const Stack stack) {
