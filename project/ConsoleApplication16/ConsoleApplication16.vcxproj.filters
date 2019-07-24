@@ -18,5 +18,13 @@
     <ClCompile Include="ConsoleApplication16.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Double_Linked_List.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Double_Linked_List.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

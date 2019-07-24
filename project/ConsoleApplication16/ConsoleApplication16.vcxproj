@@ -152,6 +152,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleApplication16.cpp" />
+    <ClCompile Include="Double_Linked_List.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Double_Linked_List.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

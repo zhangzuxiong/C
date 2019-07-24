@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "Double_Linked_List.h"
+
+/*
 typedef struct Node
 {
 	//前一个
@@ -352,7 +355,7 @@ void print_Double_Linked_List(const DL_List list) {
 	printf("\n");
 }
 
-
+*/
 
 int main()
 {
