@@ -88,14 +88,14 @@ void pushStack(Stack* p, const Element num) {
 
 
 // 5.弹出
-int popStack(Stack* p) {
+Element popStack(Stack* p) {
 
 	// 指针判空
 	if (p == NULL)
 	{
 		//printf(" pop_Stack 函数形参为空\n");
 
-		return -1;
+		return NULL;
 	}
 
 	// 判空
@@ -103,7 +103,7 @@ int popStack(Stack* p) {
 	{
 		printf(" 栈为空，没有可以出栈的元素\n");
 
-		return -2;
+		return NULL;
 	}
 
 	// 将需要弹出的数值先保留下来
