@@ -3,26 +3,29 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 typedef struct User
 {
 	//用户ID
-	int ID;
+	//int ID;
 
-	//用户密码
-	char password[9];
 
 	//用户姓名
 	char name[50];
 
+	//用户密码
+	char password[9];
+
+
 
 	//联系电话
-	char phone[20];
+	//char phone[20];
 
 
 	//收件地址
-	char address[50];
+	//char address[50];
 
 } User;
 
@@ -65,11 +68,11 @@ int deletePositionUserList(UserList* p, const int position);
 
 
 //查找--根据值查找，返回值的位置
-int searchUserIndex(const UserList list, const int num);
+int searchUserIndex(const UserList list, const char* name);
 
 
 //查找--按照值查询返回查找的地址
-User* searchUserByID(const UserList list, const int id);
+User* searchUserByID(const UserList list, const char* name);
 
 //清空
 void clearUserList(UserList* p);
@@ -88,3 +91,4 @@ void saveAllUserInfo(const UserList list);
 //从文件中读取用户信息
 void getAllUserInfo(UserList* p);
 
+bool cmp(const char* s1, const char* s2);

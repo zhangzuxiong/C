@@ -89,6 +89,45 @@ int insertGoods(GoodsList* p, const Goods goods) {
 
 }
 
+
+int insertGoodsByFile(GoodsList* p, const Goods goods) {
+	if (p == NULL)
+	{
+		printf("新增商品参数为空\n");
+		return 0;
+	}
+
+	GoodsNode* index = p->head;
+
+	//将商品保存到指针节点
+	GoodsNode* data = (GoodsNode*)malloc(sizeof(GoodsNode));
+
+	data->goods = goods;
+
+	//如果链表为空，则在第一个位置插入，需要特殊处理
+	if (index == NULL)
+	{
+		p->head = data;
+	}
+	else
+	{
+		//在商品链表末尾插入一个商品
+		while (index->next != NULL)
+		{
+			index = index->next;
+		}
+
+		index->next = data;
+	}
+
+	//队列末尾指针置位NULL
+	data->next = NULL;
+
+	return 1;
+
+}
+
+
 //通过商品ID删除对应的商品
 int deleteGoodsById(GoodsList* p, const int ID) {
 	// 指针判空

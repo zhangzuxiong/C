@@ -49,6 +49,8 @@ void initGoods(GoodsList* p);
 //新增，返回值1:插入成功,0:插入失败
 int insertGoods(GoodsList* p, const Goods goods);
 
+int insertGoodsByFile(GoodsList* p, const Goods goods);
+
 //通过商品ID删除对应的商品
 int deleteGoodsById(GoodsList* p, const int ID);
 

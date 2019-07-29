@@ -63,9 +63,9 @@ int insertUser(UserList* p, const const int position, const User user) {
 	}
 
 	//输入的Id已经存在
-	if (searchUserByID(*p, user.ID)!=NULL)
+	if (searchUserByID(*p, user.name)!=NULL)
 	{
-		printf("用户Id已经存在\n");
+		printf("用户已经存在\n");
 		return 0;
 	}
 
@@ -259,7 +259,7 @@ int deletePositionUserList(UserList* p, const int position) {
 
 
 //查找--根据值查找，返回值的位置
-int searchUserIndex(const UserList list, const int Id) {
+int searchUserIndex(const UserList list, const char* name) {
 	if (judgeEmpotyUserList(list))
 	{
 		//printf("双链表已经为空，不能查找\n");
@@ -274,7 +274,7 @@ int searchUserIndex(const UserList list, const int Id) {
 	while (temp != NULL)
 	{
 		//找到了返回，这个元素是双链表的第几个
-		if (temp->user.ID == Id)
+		if (temp->user.name == name)
 		{
 			return i;
 		}
@@ -288,19 +288,27 @@ int searchUserIndex(const UserList list, const int Id) {
 
 
 //查找--按照值查询返回查找的地址
-User* searchUserByID(const UserList list, const int id) {
+User* searchUserByID(const UserList list, const char* name) {
+
+	if (name==NULL)
+	{
+		return NULL;
+	}
+
 	if (judgeEmpotyUserList(list))
 	{
 		printf("双链表已经为空，不能查找\n");
 		return NULL;
 	}
 
+
 	//临时指针变量保存找到的地址
 	UserNode* temp = list.head;
 
+
 	while (temp != NULL)
 	{
-		if (temp->user.ID == id)
+		if (cmp(temp->user.name,name))
 		{
 			return &(temp->user);
 		}
@@ -363,12 +371,12 @@ void printUserList(const UserList list) {
 
 	if (list.head != NULL)
 	{
-		printf("%-10s%-10s%-10s%-10s%-10s\n", "用户ID", "用户密码", "用户姓名", "联系电话", "收件地址");
+		printf("%-10s%-10s\n", "用户姓名", "用户密码");
 	}
 
 	while (node != NULL)
 	{
-		printf("%-10d%-10s%-10s%-10s%-10s\n", node->user.ID, node->user.password, node->user.name, node->user.phone, node->user.address);
+		printf("%-10s%-10s\n", node->user.name, node->user.password);
 
 		//指向下一个打印的节点元素
 		//user = NULL;
@@ -397,7 +405,7 @@ void saveAllUserInfo(const UserList list) {
 	UserNode* node = list.head;
 	while (node!=NULL)
 	{
-		fprintf(file,"%d\t%s\t%s\t%s\t%s\n",node->user.ID,node->user.password,node->user.name,node->user.phone,node->user.address );
+		fprintf(file,"%s\t%s\n",node->user.name,node->user.password);
 		node = node->next;
 	}
 
@@ -419,21 +427,41 @@ void getAllUserInfo(UserList* p) {
 		return;
 	}
 
-	UserNode* node = p->head = (UserNode*)malloc(sizeof(UserNode));
+	User node = { 0 };
 
 	while (!feof(file))
 	{
-		node = (UserNode*)malloc(sizeof(UserNode));
-		fscanf(file, "%d\t%s\t%s\t%s\t%s\n", &node->user.ID, node->user.password, node->user.name, node->user.phone, node->user.address);
-		if (node->user.ID<1)
-		{
-			continue;
-		}
-		insertUser(p, 1, node->user);
+		fscanf(file, "%s\t%s\n", node.name, node.password);
+
+		insertUser(p, p->count+1, node);
 	}
 
 	fclose(file);
 
 }
 
+
+bool cmp(const char* s1, const char* s2) {
+
+	// 指针形参 判空（必须有）
+	if (s1 == NULL || s2 == NULL)
+	{
+		return false;
+	}
+
+	// 循环比较
+	int i = 0;
+
+	while (s1[i] != 0 || s2[i] != 0)
+	{
+		if (s1[i] != s2[i])
+		{
+			return false;
+		}
+
+		i++;
+	}
+
+	return true;
+}
 

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Single_Linked_List.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Goods.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -27,36 +24,24 @@
     <ClCompile Include="Main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Double_Linked_List.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Order_Have_Goods.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="User.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Order.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Single_Linked_List.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Goods.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="OrderQueue.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Double_Linked_List.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Order.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="User.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Order_Have_Goods.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
