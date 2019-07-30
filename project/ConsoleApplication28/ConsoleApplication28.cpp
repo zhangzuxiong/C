@@ -33,14 +33,14 @@ void createArrayList(int* arr) {
 		arr[i] = rand() % SIZE;
 
 		//如果重复，重新生成
-		/*if (mark[arr[i]] != 0)
+		if (mark[arr[i]] != 0)
 		{
 			i--;
 		}
 		else
 		{
 			mark[arr[i]] = 1;
-		}*/
+		}
 	}
 }
 
@@ -218,7 +218,81 @@ void quickSort(int* a, int left, int right) {
 	quickSort(a, mid + 1, right);
 }
 
+//合并
+void merge(int* p, int left, int mid, int right) {
+	if (p==NULL)
+	{
+		return;
+	}
 
+	//定义一个新数组，保存数据
+	int len = right - left + 1;
+	int* temp = (int*)malloc(sizeof(int) * len);
+
+	int index = 0;
+	int i = left;
+	int j = mid+1;
+
+	while (i <= mid && j <= right)
+	{
+		temp[index++] = p[i] < p[j] ? p[i++] : p[j++];
+		/*if ( p[i] < p[j] )
+		{
+			temp[index] = p[i];
+
+			i++;
+		}
+		else
+		{
+			temp[index] = p[j];
+
+			j++;
+		}
+
+		index++;*/
+	}
+
+	while (i<=mid)
+	{
+		temp[index++] = p[i++];
+	}
+	while (j<=right)
+	{
+		temp[index++] = p[j++];
+	}
+
+	
+	for (int i = 0; i < len; i++)
+	{
+		p[left++] = temp[i];
+	}
+
+	free(temp);
+}
+
+//归并排序
+void mergeSort(int* arr,int left,int right) {
+	if (arr==NULL)
+	{
+		return;
+	}
+
+	if (left==right)
+	{
+		return;
+	}
+
+	int mid = (left + right) / 2;
+
+	//拆分
+	mergeSort(arr, left, mid);
+	mergeSort(arr,mid + 1, right);
+
+	//合并
+	merge(arr, left, mid, right);
+
+
+}
 
 
 //快速排序
@@ -271,47 +345,98 @@ void quick_Sort(int* arr,int begin,int end) {
 }
 
 
+//希尔排序
+void shellSort(int* p,int length) {
+	if (p==NULL)
+	{
+		return;
+	}
+
+	//组内间隔
+	int interval = length / 2;
+	for ( interval = length / 2; interval > 0; interval/=2)
+	{
+		int n = 0;
+		//每次分组的个数
+		for ( n = 0; n < interval; n++)
+		{
+			int i = 0;
+			int j = 0;
+			//组内插入排序
+			for (i = n+interval; i < length; i+=interval)
+			{
+				int index = p[i];
+				j = i - interval;
+
+				while (j >= 0 && p[j] > index)
+				{
+					p[j + interval] = p[j];
+					j=j-interval;
+				}
+
+				p[j + interval] = index;
+			}
+		}
+	}
+
+}
+
+
+
 int main()
 {
 	int arr[SIZE] = { 0 };
 
+	//createArrayList(arr);
+	//printArray(arr);
+	//bubbleSort(arr);//冒泡
+	//printArray(arr);
+	//printf("\n");
+
+
+	//createArrayList(arr);
+	//printArray(arr);
+	//insertionSort(arr);//插入排序
+	//printArray(arr);
+	//printf("\n");
+
+	//createArrayList(arr);
+	//printArray(arr);
+	//selectSort(arr);//选择排序
+	//printArray(arr);
+	//printf("\n");
+
+
+	//createArrayList(arr);
+	//printArray(arr);
+	//heapSort(arr,SIZE);//堆排序
+	//printArray(arr);
+	//printf("\n-------------\n");
+
+
+	//createArrayList(arr);
+	//printArray(arr);
+	//quickSort(arr,0,SIZE-1);//快速排序
+	//printArray(arr);
+	//printf("\n------\n");
+
+
+	//createArrayList(arr);
+	//printArray(arr);
+	//quick_Sort(arr, 0, SIZE - 1);//快速排序
+	//printArray(arr);
+	//printf("\n");
+
+
 	createArrayList(arr);
 	printArray(arr);
-	bubbleSort(arr);//冒泡
+	mergeSort(arr, 0, SIZE - 1);//归并排序
 	printArray(arr);
 	printf("\n");
 
-
 	createArrayList(arr);
 	printArray(arr);
-	insertionSort(arr);//插入排序
-	printArray(arr);
-	printf("\n");
-
-	createArrayList(arr);
-	printArray(arr);
-	selectSort(arr);//选择排序
-	printArray(arr);
-	printf("\n");
-
-
-	createArrayList(arr);
-	printArray(arr);
-	heapSort(arr,SIZE);//堆排序
-	printArray(arr);
-	printf("\n-------------\n");
-
-
-	createArrayList(arr);
-	printArray(arr);
-	quickSort(arr,0,SIZE-1);//快速排序
-	printArray(arr);
-	printf("\n------\n");
-
-
-	createArrayList(arr);
-	printArray(arr);
-	quick_Sort(arr, 0, SIZE - 1);//快速排序
+	shellSort(arr,SIZE);//归并排序
 	printArray(arr);
 	printf("\n");
 
