@@ -1,0 +1,193 @@
+#include <stdio.h>
+
+// 2 交换连个数的值
+void swap( int* x, int* y ) {
+
+	int t = *x;
+	*x = *y;
+	*y = t;
+
+}
+
+
+// 4 计算一个字符串的长度
+int getLength( char* str ) {
+
+	// 指针形参 判空（必须有）
+	if ( str == NULL)
+	{
+		//printf(" 指针形参为空！有误！\n");
+
+		return;
+	}
+
+	int i = 0;
+
+	while ( str[i] != '\0' )
+	{
+		i++;
+	}
+
+	return i;
+}
+
+
+
+// 5 将 s2 的内容 复制到 s1 里面
+void cp( char* s1, char* s2 ) {
+
+	// 指针形参 判空（必须有）
+	if ( s1 == NULL || s2 == NULL )
+	{
+		//printf(" 指针形参为空！有误！\n");
+
+		return;
+	}
+
+	int i = 0;
+
+	// 循环 逐一 将元素复制
+	while ( s2[i] != '\0' )
+	{
+		s1[i] = s2[i];
+
+		i++;
+	}
+
+	// 末尾加 \0
+	s1[i] = '\0';
+
+}
+
+
+
+// 6 将 s2 拼接 s1 后面
+void append( char* s1, char* s2 ) {
+
+	// 指针形参 判空（必须有）
+	if ( s1 == NULL || s2 == NULL )
+	{
+		//printf(" 指针形参为空！有误！\n");
+
+		return;
+	}
+
+	// 遍历到 s1 的末尾，将 s2 添加进去
+	int i = 0;
+
+	while ( s1[i] != 0 )
+	{
+		i++;
+	}
+
+	int j = 0;
+
+	while ( s2[j] != 0 )
+	{
+		s1[i] = s2[j];
+
+		i++;
+
+		j++;
+	}
+
+	// s1 末尾加\0
+	s1[i] = '\0';
+}
+
+
+
+// 7 比较 s1 和 s2 的字符内容是否相同
+bool cmp( char* s1, char* s2 ) {
+
+	// 指针形参 判空（必须有）
+	if (s1 == NULL || s2 == NULL)
+	{
+		//printf(" 指针形参为空！有误！\n");
+
+		return false;
+	}
+
+	// 循环比较
+	int i = 0;
+
+	while ( s1[i] != 0 || s2[i] != 0 )
+	{
+		if ( s1[i] != s2[i] )
+		{
+			//printf(" 两个字符串不相同\n");
+
+			return false;
+		}
+
+		i++;
+	}
+
+	return true;
+}
+
+
+
+// 8 将 s2 插入 到 s1 的 第 n 个字符后面
+void insertIndex( char* s1, char* s2, int n ) {
+
+	// 指针形参 判空（必须有）
+	if ( s1 == NULL || s2 == NULL )
+	{
+		//printf(" 指针形参为空！有误！\n");
+
+		return;
+	}
+
+
+	// 插入的位置是否在 s1 的范围内
+	// s1的内容长度
+	int l1 = 0;
+
+	while ( s1[l1] != 0 )
+	{
+		l1++;
+	}
+
+	if ( n < 0 || n > l1 )
+	{
+		//printf(" 输入的插入位置 有误！\n");
+
+		return;
+	}
+	
+	// 计算 s2 的长度，以便去挪动 s1 里面的内容
+	int l2 = 0;
+
+	while ( s2[l2] != 0 )
+	{
+		l2++;
+	}
+
+	// 跟 n 开始 将 s1 后面的部分依次往后挪动
+	int i = l1-1;
+
+	while ( i >= n )
+	{
+		s1[i + l2] = s1[i];
+
+		i--;
+	}
+
+	// 将 s2 的内容 复制到 空出的 s1 的部分
+	int j = 0;
+
+	i = i + 1;
+
+	while ( s2[j] != 0 )
+	{
+		s1[i] = s2[j];
+
+		i++;
+
+		j++;
+	}
+
+	// 在 s1 的末尾 加 \0
+	s1[l1 + l2] = '\0';
+}
