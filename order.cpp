@@ -5,6 +5,7 @@
 #define MAX_INT 32767
 //const int MAX_INT = 32767;
 
+
 //商品信息
 typedef struct Goods
 {
